@@ -5,6 +5,8 @@
     Pause::Media_Play_Pause
     ScrollLock::Media_Next
     PrintScreen::Media_Prev
+    PgUp::Volume_Up
+    PgDn::Volume_Down   
 }
 
 ; Tis-100 game hotkeys
@@ -48,4 +50,14 @@
         MouseMove xpos, ypos
         BlockInput "Off"
     }
+}
+#HotIf WinActive("Cook, Serve, Delicious! 3?!")
+{
+    F3::Numpad1
+    F4::Numpad2
+    F5::Numpad3
+    F6::Numpad4
+    F7::Numpad5
+    F8::Numpad6
+    F9::Numpad7
 }
