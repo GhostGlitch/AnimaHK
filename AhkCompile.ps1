@@ -12,24 +12,25 @@ if (-not $File) {
     $File = Join-Path $myDir $defaultScript
 }
 
-
-if ((Split-Path -Leaf $File) -eq "ahkAutorun.ahk") {
-    $ScriptDir = Split-Path -Parent $File
-    $PreComp = Join-Path $ScriptDir "PreComp.ahk"
-    Start-Process -FilePath $PreComp -Wait
-}
-
 # Get Path for Output and Icon
 $ahkOutput = [System.IO.Path]::ChangeExtension($File, ".exe")
 $ahkIcon = Join-Path (Split-Path $File -Parent) "$Icon.ico"
+$scriptName = [System.IO.Path]::GetFileNameWithoutExtension($File)
 
+# Run the script's PreComp if it has one.
+$scriptDir = Split-Path -Parent $File
+$preComp = Join-Path $scriptDir "$scriptName-PreComp.ahk"
+if (Test-Path -Path $preComp) {
+    $scriptDir = Split-Path -Parent $File
+    Start-Process -FilePath $PreComp -Wait
+}
 
 # Kill and remove previous ver (Compiler get's mad if old file exists)
-$scriptName = [System.IO.Path]::GetFileNameWithoutExtension($ahkOutput)
 Get-Process -Name $scriptName | Stop-Process -Force
 Start-Sleep -Milliseconds 500
 Remove-Item $ahkOutput -Force
 
+#TODO: SEE IF Start-Process -Wait CAN BE USED HERE
 # Compile
 & $Compiler /in $File /out $ahkOutput /icon $ahkIcon
 

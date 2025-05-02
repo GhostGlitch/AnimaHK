@@ -4,7 +4,6 @@
 #SingleInstance Force
 ; #Warn All, MsgBox
 
-GenManifestTree(A_ScriptDir "\Plugins")
 
 GenManifestTree(PluginDir) {
   OldDir := A_WorkingDir
