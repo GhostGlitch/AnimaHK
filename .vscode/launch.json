@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "AHK Compile",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/AhkCompile.ps1",
+            "cwd": "${cwd}",
+            "args": [  
+                "-File",
+                "${file}"
+            ],
+        },
+        {
+            "name": "AutoHotkey Debug (Advanced Configuration)",
+            "type": "autohotkey",
+            "request": "launch",
+            "program": "${file}",
+            "args": [],
+            "port": "9002-9010",
+            "variableCategories": "recommend",
+            "useDebugDirective": true,
+            "useAutoJumpToError": true,
+            "suppressMultipleSessionWarning": true
+        },
+    ]
+}
