@@ -1,5 +1,15 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+#Include Plugins\
+
+
+; Handle turning any window into an "overlay". Overlay windows are Overlay windows are always on top, transparent, and do not intercept mouse inputs.
+#Include Overlayify.ahk
+{
+#!T:: Overlayify()          ;Win+Alt+T flips the active window betwen overlay and normal.
+#!R:: UnOverlayAll()        ;Win+Alt+R resets windows that have been turned to overlays.
+}
+
 ; Media controls
 {
     Pause::Media_Play_Pause
@@ -9,55 +19,8 @@
     PgDn::Volume_Down   
 }
 
-; Tis-100 game hotkeys
-; numpad hotkeys type common TIS-100 commands
-; 1-4 on the toprow click the onscreen buttons for running 
-#HotIf WinActive("TIS-100")
-{
-    NumpadClear:: Send("mov ")
-    NumpadUp:: Send("Up ")
-    NumpadDown:: Send("Down ")
-    NumpadLeft:: Send("Left ")
-    NumpadRight:: Send("Right ")
-    NumpadHome:: Send("acc ")
-    NumpadAdd:: Send("add ")
-    NumpadSub:: Send("sub ")
-    1:: {
-        BlockInput "On"
-        MouseGetPos &xpos, &ypos
-        Click 80, 1000
-        MouseMove xpos, ypos
-        BlockInput "Off"
-    }
-    4:: {
-        BlockInput "On"
-        MouseGetPos &xpos, &ypos
-        Click 190, 1000
-        MouseMove xpos, ypos
-        BlockInput "Off"
-    }
-    3:: {
-        BlockInput "On"
-        MouseGetPos &xpos, &ypos
-        Click 300, 1000
-        MouseMove xpos, ypos
-        BlockInput "Off"
-    }
-    2:: {
-        BlockInput "On"
-        MouseGetPos &xpos, &ypos
-        Click 410, 1000
-        MouseMove xpos, ypos
-        BlockInput "Off"
-    }
-}
-#HotIf WinActive("Cook, Serve, Delicious! 3?!")
-{
-    F3::Numpad1
-    F4::Numpad2
-    F5::Numpad3
-    F6::Numpad4
-    F7::Numpad5
-    F8::Numpad6
-    F9::Numpad7
-}
+; Mask annoying Hotkeys
+#Include Shadow.ahk
+
+; Game specific hotkey configs
+#Include Games\_games.ahk

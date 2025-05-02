@@ -1,5 +1,0 @@
-#Requires AutoHotkey v2.0
-#SingleInstance Force
-Pause::Media_Play_Pause
-ScrollLock::Media_Next
-PrintScreen::Media_Prev
