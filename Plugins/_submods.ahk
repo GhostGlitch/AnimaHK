@@ -3,12 +3,6 @@
 
 #Requires AutoHotkey v2.0
 
-  ;SUBMODULES
   #include Games\_games.ahk
-  ;SUBMODULES
-
-#include MediaControls.ahk
-#include Overlayify.ahk
-#include Shadow.ahk
 
 #HotIf

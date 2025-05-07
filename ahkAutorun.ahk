@@ -23,4 +23,4 @@
 #Include Shadow.ahk
 
 ; Game specific hotkey configs
-#Include Games\_games.ahk
+#Include _submods.ahk
