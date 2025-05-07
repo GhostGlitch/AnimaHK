@@ -41,14 +41,14 @@ if not IconName {
     ;IconName := DEFICON
 }
 
-; Set Path for Output and Icon
+; Build Paths
 OutputPath := JoinPath(ScriptDir, ScriptName, ".exe")
 IconPath := JoinPath(ScriptDir, IconName, ".ico")
-PreComp := JoinPath(ScriptDir, ScriptName . "-PreComp.ahk")
+MahkPath := JoinPath(ScriptDir, ScriptName, ".m.ahk")
 
-; Run the script's PreComp if it has one.
-if FileExist(PreComp) {
-    RunWait PreComp
+; Run the script's Mahk if it has one.
+if FileExist(MahkPath) {
+    RunWait MahkPath
 }
 
 ; Kill and remove previous ver (Compiler get's mad if old file exists)
