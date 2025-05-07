@@ -5,10 +5,11 @@
 
   ;SUBMODULES
   #include Games\_games.ahk
+  #include Overlayify\_overlayify.ahk
   ;SUBMODULES
 
 #include MediaControls.ahk
-#include Overlayify.ahk
 #include Shadow.ahk
+#include Typing.ahk
 
 #HotIf

@@ -3,27 +3,19 @@
 #Include Plugins\
 
 ; Handle turning any window into an "overlay". Overlay windows are Overlay windows are always on top, transparent, and do not intercept mouse inputs.
-#Include Overlayify.ahk
-{
-#!T:: Overlayify()          ;Win+Alt+T flips the active window betwen overlay and normal.
-#!R:: UnOverlayAll()        ;Win+Alt+R resets windows that have been turned to overlays.
-}
+#Include Overlayify\_overlayify.ahk
 
 ; Media controls
-{
-    Pause::Media_Play_Pause
-    ScrollLock::Media_Next
-    PrintScreen::Media_Prev
-    PgUp::Volume_Up
-    PgDn::Volume_Down   
-}
+#Include MediaControls.ahk
+
 ; Other Random Hot[key/string]s
-{
-HotString(":::tm:", "™")
-}
+#Include Typing.ahk
 
 ; Mask annoying Hotkeys
 #Include Shadow.ahk
 
 ; Game specific hotkey configs
-#Include _submods.ahk
+#Include Games\_games.ahk
+
+; Any others not specified
+#Include _plugins.ahk

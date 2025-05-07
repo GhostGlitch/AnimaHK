@@ -3,7 +3,7 @@
 
 #Requires AutoHotkey v2.0
 
-  #include Games\_games.ahk
-  #include Overlayify\_overlayify.ahk
+#include functions.ahk
+#include hotkeys.ahk
 
 #HotIf
