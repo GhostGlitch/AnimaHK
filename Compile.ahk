@@ -26,35 +26,32 @@ if A_Args.Length > 0 {
 if not CompPath {
     CompPath := RegRead("HKLM\SOFTWARE\AutoHotkey", "InstallDir") "\Compiler\Ahk2Exe.exe"
 }
-/*
-# Set File Path to default if not passed (default Script in script DIR)
-*/
+
+; Set File Path to default if not passed (DEFSCRIPT in script DIR)
 if not SrcPath {
     SrcPath := JoinPath(A_ScriptDir, DEFSCRIPT)
 }
 
-SplitPath(SrcPath, &ScriptNameExt, &ScriptDir,, &ScriptName)
+; Get Script Name and Dir
+SplitPath(SrcPath,, &ScriptDir,, &ScriptName)
 
 ; Set Icon to Script.ico if not passed.
 if not IconName {
     IconName := ScriptName
     ;IconName := DEFICON
 }
-/*
-# Get Path for Output and Icon
-*/
+
+; Set Path for Output and Icon
 OutputPath := JoinPath(ScriptDir, ScriptName, ".exe")
 IconPath := JoinPath(ScriptDir, IconName, ".ico")
 PreComp := JoinPath(ScriptDir, ScriptName . "-PreComp.ahk")
-/*
-# Run the script's PreComp if it has one.
-*/
+
+; Run the script's PreComp if it has one.
 if FileExist(PreComp) {
     RunWait PreComp
 }
-/*
-# Kill and remove previous ver (Compiler get's mad if old file exists)
-*/
+
+; Kill and remove previous ver (Compiler get's mad if old file exists)
 While ProcessExist(ScriptName . ".exe")
     ProcessClose ScriptName . ".exe"
 FileTryDelete(OutputPath)
@@ -72,16 +69,9 @@ if FileExist(IconPath) {
     }
 }
 
-/*
-# Compile
-*/
+; Compile
 RunWait CompPath CompArgs
-
-/*
-}
-
-# RUN
-*/
+; RUN
 Run OutputPath
 
 

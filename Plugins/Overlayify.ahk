@@ -3,14 +3,13 @@
 
 OverlayedWins := Map()      ; A dictionary of all windows that have been altered, and their original properties.
 
-; Alternate a given window between it's normal state, and an "overlay" state. 
-  ; Overlay windows are always on top, transparent, and do not intercept mouse inputs.
-    ; Win: an optional HWID of the target window.
-      ;DEFAULT: Active window
-    ; Trans: The desired transparency of the window, 0-255 (NOTE, does nothing if the window has already been altered)
-      ;DEFAULT: 187
-    ; Verbose: Print the current list of windows after every run.
-      ;DEFAULT: false
+/**
+  Alternate a given window between its normal state and an "overlay" state.
+    Overlay windows are always on top, transparent, and do not intercept mouse inputs.
+  @param {int}  Win      Target window HWND. Default: Active Window.
+  @param {int}  Trans    Transparency (0-255). Ignored if window already modified. Default: 187.
+  @param {bool} Verbose  If true, print he current list of windows after run. Default: false.
+ */
 Overlayify(Win := "", Trans := 187, verbose := false) {
   if not Win
     Win := WinExist("A")                  ; "A" specifies active window
@@ -48,7 +47,7 @@ UnOverlayAll() {
   }
 } 
 
-; Flattens any array or map to a string.
+; Flattens any array or map to a string. Should be slpit into a lib. But I'm lazy.
 ArrToStr(Array) {
   Str := ""
   For k, v In Array {                         
