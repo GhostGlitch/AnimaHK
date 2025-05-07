@@ -2,7 +2,6 @@
 #SingleInstance Force
 #Include Plugins\
 
-
 ; Handle turning any window into an "overlay". Overlay windows are Overlay windows are always on top, transparent, and do not intercept mouse inputs.
 #Include Overlayify.ahk
 {
@@ -17,6 +16,10 @@
     PrintScreen::Media_Prev
     PgUp::Volume_Up
     PgDn::Volume_Down   
+}
+; Other Random Hot[key/string]s
+{
+HotString(":::tm:", "™")
 }
 
 ; Mask annoying Hotkeys
