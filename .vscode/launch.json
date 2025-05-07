@@ -4,10 +4,9 @@
             "name": "AHK Compile",
             "type": "PowerShell",
             "request": "launch",
-            "script": "${workspaceFolder}/AhkCompile.ps1",
+            "script": "${workspaceFolder}/Compile.ahk",
             "cwd": "${cwd}",
             "args": [  
-                "-File",
                 "${file}"
             ],
         },

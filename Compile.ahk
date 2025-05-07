@@ -1,47 +1,126 @@
-param (
-    [string]$Compiler = "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe",
-    [string]$File = $null,
-    [string]$Icon = "Ghosty"
-)
-$defaultScript = "ahkAutorun.ahk" # name AND extension of the script if no param.
+#Requires AutoHotkey v2.0
+#SingleInstance Force
+DEFSCRIPT := "ahkAutorun.ahk" ; name AND extension of the script if no arg.
+DEFICON := "AHK" ; name of the icon if no arg.
 
+if A_Args.Length > 3  {
+    MsgBox "Usage: AhkCompile.ahk [SourcePath] [IconName]? [CompilerPath]?"
+    ExitApp
+}
+
+; Set all Params to either empty or passed args
+SrcPath := ""
+IconName := ""
+CompPath := ""
+if A_Args.Length > 0 {
+    SrcPath := A_Args[1]
+    if A_Args.Length >1 {
+        IconName := A_Args[2] 
+        if A_Args.Length >2  {
+            CompPath := A_Args[3] 
+        }
+    }
+}
+
+; Set Default Compiler Path if not passed.
+if not CompPath {
+    CompPath := RegRead("HKLM\SOFTWARE\AutoHotkey", "InstallDir") "\Compiler\Ahk2Exe.exe"
+}
+/*
 # Set File Path to default if not passed (default Script in script DIR)
-if (-not $File) {
-    Write-Host "No script specified. Using default: $defaultScript"
-    $myDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $File = Join-Path $myDir $defaultScript
+*/
+if not SrcPath {
+    SrcPath := JoinPath(A_ScriptDir, DEFSCRIPT)
 }
 
+SplitPath(SrcPath, &ScriptNameExt, &ScriptDir,, &ScriptName)
+
+; Set Icon to Script.ico if not passed.
+if not IconName {
+    IconName := ScriptName
+    ;IconName := DEFICON
+}
+/*
 # Get Path for Output and Icon
-$ahkOutput = [System.IO.Path]::ChangeExtension($File, ".exe")
-$ahkIcon = Join-Path (Split-Path $File -Parent) "$Icon.ico"
-$scriptName = [System.IO.Path]::GetFileNameWithoutExtension($File)
-
+*/
+OutputPath := JoinPath(ScriptDir, ScriptName, ".exe")
+IconPath := JoinPath(ScriptDir, IconName, ".ico")
+PreComp := JoinPath(ScriptDir, ScriptName . "-PreComp.ahk")
+/*
 # Run the script's PreComp if it has one.
-$scriptDir = Split-Path -Parent $File
-$preComp = Join-Path $scriptDir "$scriptName-PreComp.ahk"
-if (Test-Path -Path $preComp) {
-    $scriptDir = Split-Path -Parent $File
-    Start-Process -FilePath $PreComp -Wait
+*/
+if FileExist(PreComp) {
+    RunWait PreComp
+}
+/*
+# Kill and remove previous ver (Compiler get's mad if old file exists)
+*/
+While ProcessExist(ScriptName . ".exe")
+    ProcessClose ScriptName . ".exe"
+FileTryDelete(OutputPath)
+
+; Build the Compiler Arguments. Including setting icon to Script.ico or DEFICON.ico or nothing.
+CompArgs :=
+    " /in " . SrcPath .
+    " /out " . OutputPath
+if FileExist(IconPath) {
+    CompArgs .= " /icon " . IconPath
+} else if (DEFICON != "") {
+    IconPath := JoinPath(ScriptDir, DEFICON, ".ico")
+    if FileExist(IconPath) {
+        CompArgs .= " /icon " . IconPath
+    }
 }
 
-# Kill and remove previous ver (Compiler get's mad if old file exists)
-Get-Process -Name $scriptName | Stop-Process -Force
-Start-Sleep -Milliseconds 500
-Remove-Item $ahkOutput -Force
-
-#TODO: SEE IF Start-Process -Wait CAN BE USED HERE
+/*
 # Compile
-& $Compiler /in $File /out $ahkOutput /icon $ahkIcon
+*/
+RunWait CompPath CompArgs
 
-# Wait for compiled file to be created, then run it
-$timeout = 5000     # Max total wait time
-$sleepTime = 200    # How often to retry
-$totalTime = 0
-while (-not (Test-Path $ahkOutput) -and $totalTime -lt $timeout) {
-    Start-Sleep -Milliseconds $sleepTime
-    $totalTime += $sleepTime
+/*
 }
 
 # RUN
-Start-Process $ahkOutput
+*/
+Run OutputPath
+
+
+; Should be a lib.
+JoinPath(Base, Paths*) {
+
+    if Instr(Base, "/") {
+        sep := "/"
+    } else {
+        sep := "\"
+    }
+
+    for Path in Paths {
+        if (Path == "") {
+            continue
+        }
+
+        firstPChar := SubStr(Path, 1, 1)
+        lastBChar := SubStr(Base, -1)
+        if (firstPChar == ".") {
+            Base .= Path
+            continue
+        }
+
+        if (firstPChar == "\" or firstPChar == "/") {
+            Path := SubStr(Path, 2)
+        }
+        if (lastBChar == "\" or lastBChar == "/") {
+            Path := SubStr(Path, 1,-1)
+        }
+
+        Base .= sep . Path
+    }
+    return Base
+}
+
+; Should be a lib.
+FileTryDelete(FilePath) {
+    if FileExist(FilePath) {
+        FileDelete FilePath
+    }
+}
