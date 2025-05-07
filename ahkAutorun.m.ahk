@@ -1,5 +1,5 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include PreComp.ahk
+#Include PluginTree.ahk
 
-GenManifestTree(A_ScriptDir "\Plugins")
+GenPluginTree(A_ScriptDir "\Plugins")
