@@ -27,7 +27,6 @@ GenPluginTree(PluginDir, MakeSubmods := true, Manifest := "") {
     subMods := ""
     Loop Files, "*", "D" {
       If SubStr(A_LoopFileName, 1, 1) != "_" {
-        MsgBox "SubMod: " A_LoopFileName
         minifest := GenPluginTree(A_LoopFilePath, false)
         subMods .= "  #include " . minifest "`n"
       }
