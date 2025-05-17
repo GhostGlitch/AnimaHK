@@ -1,5 +1,9 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+;; |||TODO|||
+    ;;-||Refactor|| 
+        ;;+ |ArrToStr| Move to lib.
+
 
 OverlayedWins := Map()      ; A dictionary of all windows that have been altered, and their original properties.
 
@@ -9,7 +13,7 @@ OverlayedWins := Map()      ; A dictionary of all windows that have been altered
   @param {int}  Win      Target window HWND. Default: Active Window.
   @param {int}  Trans    Transparency (0-255). Ignored if window already modified. Default: 187.
   @param {bool} Verbose  If true, print he current list of windows after run. Default: false.
- */
+ **/
 Overlayify(Win := "", Trans := 187, verbose := false) {
   if not Win
     Win := WinExist("A")                  ; "A" specifies active window
