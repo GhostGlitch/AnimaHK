@@ -15,8 +15,8 @@
 ; Media controls
 #Include MediaControls.ahk
 
-; Other Random Hot[key/string]s
-#Include Typing.ahk
+; Random Hotstrings
+#Include Hotstrings.ahk
 
 ; Mask annoying Hotkeys
 #Include Shadow.ahk
