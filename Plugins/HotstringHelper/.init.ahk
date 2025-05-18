@@ -5,6 +5,7 @@
    ;;+ Possibly embed hotkeys.ahk in the compiled version, so that if not found, a default version can be extracted to AppData.
  ;;-||Embed _reload_hostrings|| Embed the _reload_hotstrings.ahk in compiled binaries, so that it can be run directly from there without need for external files.
 _HH_Init() {
+    global A_ScriptPID := ProcessExist()
     ;: Set Path to own Plugin ;;
     if !_HH_PluginPath {
         ;: CONFIG ;;
