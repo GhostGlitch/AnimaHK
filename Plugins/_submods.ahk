@@ -4,6 +4,7 @@
 #Requires AutoHotkey v2.0
 
   #include Games\_games.ahk
+  #include HotstringHelper\_hotstringhelper.ahk
   #include Overlayify\_overlayify.ahk
 
 #HotIf

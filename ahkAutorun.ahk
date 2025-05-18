@@ -15,8 +15,11 @@
 ; Media controls
 #Include MediaControls.ahk
 
-; Random Hotstrings
-#Include Hotstrings.ahk
+; Hotstrings
+    ; Make Hotstrings On the Fly
+    #Include HotstringHelper\_hotstringhelper.ahk
+    ; Random Hotstrings
+    #Include Hotstrings.ahk
 
 ; Mask annoying Hotkeys
 #Include Shadow.ahk
@@ -24,5 +27,5 @@
 ; Game specific hotkey configs
 #Include Games\_games.ahk
 
-; Any others not specified
-#Include _plugins.ahk
+; Any others not specified (disabled)
+; #Include _plugins.ahk

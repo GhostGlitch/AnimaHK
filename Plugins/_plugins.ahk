@@ -5,6 +5,7 @@
 
   ;SUBMODULES
   #include Games\_games.ahk
+  #include HotstringHelper\_hotstringhelper.ahk
   #include Overlayify\_overlayify.ahk
   ;SUBMODULES
 
