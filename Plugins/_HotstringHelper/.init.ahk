@@ -1,5 +1,9 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+;;|||TODO|||
+    ;;-||Hotload|| Make the compiled version hotload the hotstring file when run. Allowing new hotkeys to be persist through relaunches without needing a recompile.
+        ;+ Make sure to modify the error message if you do.
+
 Init() {
     ;: CONFIG ;;
     SplitPath(A_ScriptDir,,&HH_DirOfDir)
@@ -24,7 +28,7 @@ Init() {
             MsgBox(baseError "Please check the paths specified in the script at " A_ScriptFullPath, errorTitle)
             return
         } else {
-            MsgBox(baseError "Either create a file there, or compile the script with the correct path.", errorTitle)
+            MsgBox(baseError "Either create a file there, or compile the script with the correct path. `n`nHotstrings should still work until the program is closed, but they will not be added to a new version if you recompile", errorTitle)
             return
         }
     }
