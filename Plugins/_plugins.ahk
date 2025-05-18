@@ -9,7 +9,6 @@
   #include Overlayify\_overlayify.ahk
   ;SUBMODULES
 
-#include Hotstrings.ahk
 #include MediaControls.ahk
 #include Shadow.ahk
 

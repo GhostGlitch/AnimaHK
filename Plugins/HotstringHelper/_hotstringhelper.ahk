@@ -6,5 +6,6 @@
 #include .init.ahk
 #include functions.ahk
 #include hotkeys.ahk
+#include hotstrings.ahk
 
 #HotIf

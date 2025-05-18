@@ -4,8 +4,6 @@
 #SingleInstance Force
 ;;|||TODO|||
  ;;-||Escape-Char|| make \ an escape character.
- ;;-||Bugs||
-  ;;+ The 'on the fly' HotString does not respect `n as a newline in it's output. 
 
 MakeHotstring() {
     DefaultInput := "||" GetClip()
@@ -20,17 +18,10 @@ MakeHotstring() {
     }
     if !Input
         return
-    
-    Hotstring(Input.Options)
-    Hotstring(Input.Label, Input.Replacement)  ; Enable the hotstring now.
-    ;if Input.Options {
-    ;    output := Input.Hotstring
-    ;} else {
-    output := '`nHotstring("' . Input.Label . '", "' . Input.Replacement . '")'
-    ;}
-    FileAppend(output, _HH_OutputPath) ; Write the hotstring to source.
-    
 
+    FileAppend('`nHotstring("' . Input.Label . '", "' . Input.Replacement . '")', _HH_OutputPath) ; Write the hotstring to source.
+    Run _HH_Reload " " A_ScriptPID
+ 
     ;; Helper Functions:
 
     ; Does Magic to get the user's clipboard, and parses certain special chars.
@@ -112,7 +103,4 @@ MakeHotstring() {
         Send "{Home}{Right 1}"
         SetTimer , 0
     }
-    
 }
-
-
