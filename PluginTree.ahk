@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 ;; |||TODO|||
-    ;;-||Document|| How to use the "Ghost-AHK project" system.
+    ;;-||Document|| How to use the "AnimusHK project" system.
     ;;-||Refactor|| 
         ;;+ |FileSafeDelete| Move to lib. (also in Build.ahk)
 

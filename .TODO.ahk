@@ -2,7 +2,7 @@
 ; Project Level TODOs
 
 ;; |||TODO|||
-    ;;-||Document|| How to use the "Ghost-AHK project" system.
+    ;;-||Document|| How to use the "AnimusHK project" system.
     ;;-||Refactor||  Move FileSafeDelete to a library. (In Build.ahk and PluginTree.ahk)
     ;;-||Maybe?||
         ;;?-|Expansions| to old scripts:
