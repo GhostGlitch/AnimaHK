@@ -1,5 +1,3 @@
-
-.scannerwork/.sonar_lock
 test.ahk
-Ahk2Exe.lnk
+*.lnk
 *.exe
