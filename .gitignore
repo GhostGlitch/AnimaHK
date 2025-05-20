@@ -1,8 +1,8 @@
 test.ahk
 *.lnk
 *.exe
-Lib/AquaHotkey/.git/*
-Lib/AquaHotkey/.gitignore
-Lib/AquaHotkey/docs/*
-Lib/AquaHotkey/examples/*
-Lib/AquaHotkey/tests/*
+Lib/AquaHotkey-G/.git/*
+Lib/AquaHotkey-G/.gitignore
+Lib/AquaHotkey-G/docs/*
+Lib/AquaHotkey-G/examples/*
+Lib/AquaHotkey-G/tests/*
