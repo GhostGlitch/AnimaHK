@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 #Include <Apparition\String>
-#Include <Apparition\Num>
+#Include <Apparition\AllNumbers>
 __ApparitionToStr(obj, IndentSize?, Vertical := true, __nlvl__ := 0) {
     ;Base case.
     if !IsObject(obj) {

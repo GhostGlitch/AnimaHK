@@ -1,9 +1,8 @@
 #Requires AutoHotkey v2.0 
 ;;TODO Either find way to make MsgBox use Mono font, or else do char loop nonsene to double indent for letter/num chars.
+#Include <AquaHotkey-G\AquaHotkey>
 #Include <AquaEx\Map>
-;#Include <GArray>
 #Include <Apparition\__ToStr>
-
 
 
 class Apparition_Map extends AquaHotkey {

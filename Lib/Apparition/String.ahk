@@ -1,16 +1,12 @@
 #Requires AutoHotkey v2.0 
+#Include <AquaHotkey-G\AquaHotkey>
+#Include <Apparition\Primitive>
 #Include <AquaEx\String>
-
 
 class Apparition_String extends AquaHotkey {
     static WSChars := "`s`t`n`r`v`f"
     class String {
         isApparition => true
-
-        IsSet => IsSet(this)
-        IsFloat => IsFloat(this)
-        IsInt => IsInteger(this)
-        IsNum => IsNumber(this)
 
         StartsWith(Prefix) {
             return (this.Sub(1, StrLen(Prefix)) = Prefix)
