@@ -1,5 +1,5 @@
 #Requires AutoHotkey v2.0
-#Include <Apparition\Str>
+#Include <Apparition\String>
 #Include <Apparition\Num>
 __ApparitionToStr(obj, IndentSize?, Vertical := true, __nlvl__ := 0) {
     ;Base case.
