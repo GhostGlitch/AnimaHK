@@ -1,5 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+#Include <Apparition\Array>
 ;; |||TODO|||
     ;;-||Refactor|| 
         ;;+ |ArrToStr| Move to lib.
@@ -37,7 +38,7 @@ if not OverlayedWins.Has(Win) {           ; Update window properties.
     OverlayedWins.Delete(Win)
   }
   if verbose
-    MsgBox ArrToStr(OverlayedWins)        ; Debug Print
+    OverlayedWins.Display()       ; Debug Print
 }
 
 ; Returns all windows to their default state.
@@ -50,16 +51,3 @@ UnOverlayAll() {
     Overlayify(win)
   }
 } 
-
-; Flattens any array or map to a string. Should be slpit into a lib. But I'm lazy.
-ArrToStr(Array) {
-  Str := ""
-  For k, v In Array {                         
-    if IsObject(v) {                      ; If the array is nested, unpack internal with recursion
-      v := "[ " . ArrToStr(v) " ]"
-    }
-    Str .= " | " . k  " = " . v
-    Str := LTrim(Str, " | ") ; Remove leading pipes (|)
-  }
-  return Str
-}
