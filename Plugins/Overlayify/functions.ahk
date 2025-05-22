@@ -2,8 +2,6 @@
 #SingleInstance Force
 #Include <Apparition\Array>
 ;; |||TODO|||
-    ;;-||Refactor|| 
-        ;;+ |ArrToStr| Move to lib.
 
 
 OverlayedWins := Map()      ; A dictionary of all windows that have been altered, and their original properties.
