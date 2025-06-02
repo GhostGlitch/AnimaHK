@@ -900,7 +900,9 @@ class String {
     Contains(Pattern, CaseSense := false, StartingPos := 1, Occurrence := 1) {
         return InStr(this, Pattern, CaseSense, StartingPos, Occurrence)
     }
-
+    Has(Pattern, CaseSense := false, StartingPos := 1, Occurrence := 1) {
+        return InStr(this, Pattern, CaseSense, StartingPos, Occurrence)
+    }
     /**
      * Returns a substring at index `Start` and length `Length` in characters.
      * @example
