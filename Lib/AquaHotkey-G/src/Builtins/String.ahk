@@ -325,6 +325,9 @@ class String {
         if (n < 0) {
             throw ValueError("n < 0",, n)
         }
+        if (n == 0) {
+            return ""
+        }
         n_Amount_Of_Spaces := Format("{: " . n . "}", " ")
         return StrReplace(n_Amount_Of_Spaces, A_Space, this)
     }
@@ -831,8 +834,10 @@ class String {
      * 
      * @return  {String}
      */
-    Upper() => StrUpper(this)
-    ToUpper()  => StrUpper(this)
+    Upper()      => StrUpper(this)
+    ToUpper()    => StrUpper(this)
+    Capitalize() => StrUpper(this)
+    Cap()        => StrUpper(this)
 
     /**
      * Converts this string to title case.

@@ -16,7 +16,19 @@ class Integer {
      * 
      * @return  {String}
      */
-    ToHexString() => Format("{:x}", this)
+    ToHexString() => Format("{:X}", this)
+    ToHex()       => Format("{:X}", this)
+    
+    /**
+     * Returns a hexadecimal represenation of this string.
+     * @example
+     * 
+     * (255).ToLowerHexString() ; "FF"
+     * 
+     * @return  {String}
+     */
+    ToLowerHexString() => Format("{:x}", this)
+    ToLowerHex()       => Format("{:x}", this)
 
     /**
      * Returns a binary representation of this string.
@@ -27,6 +39,15 @@ class Integer {
      * @return  {String}
      */
     ToBinaryString() {
+        i := this
+        Result := ""
+        while (i) {
+            Result .= i & i
+            i >>>= 1
+        }
+        return Result.Reversed()
+    }
+    ToBinary() {
         i := this
         Result := ""
         while (i) {

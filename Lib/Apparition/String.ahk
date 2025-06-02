@@ -7,7 +7,9 @@ class Apparition_String extends AquaHotkey {
     static WSChars := "`s`t`n`r`v`f"
     class String {
         isApparition => true
-
+        Indent(Level := 2, PaddingStr := " ") {
+            return this.LPad(PaddingStr, Level)
+        }
         StartsWith(Prefix) {
             return (this.Sub(1, StrLen(Prefix)) = Prefix)
         }
@@ -33,7 +35,13 @@ class Apparition_String extends AquaHotkey {
             return this
         }
         RemoveWS(&OutputVarCount?) {
-            return this.RemoveChars(Apparition_String.WSChars,,&OutputVarCount?)
+            return this.RemoveChars(Apparition_String.WSChars, , &OutputVarCount?)
+        }
+        LRTrim(OmitCharsL?, OmitCharsR?) {
+            return this.LTrim(OmitCharsL?).RTrim(OmitCharsR?)
+        }
+        LRPad(PaddingStrL := " ", PaddingStrR := " ", n := 1) {
+            return this.LPad(PaddingStrL, n).Rpad(PaddingStrR, n)
         }
         IsSpaceTime() {
             this := this.RemoveWS()

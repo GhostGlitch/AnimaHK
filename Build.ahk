@@ -1,9 +1,8 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+#Include <Apparition\File>
 ;; |||TODO|||
     ;;-||Document|| How to use the "AnimusHK project" system.
-    ;;-||Refactor|| 
-        ;;+ |FileSafeDelete| Move to lib. (also in PluginTree.ahk)
 
     ;;-||Maybe?||
         ;;?-|Refactor|
@@ -27,7 +26,7 @@ DEF_SCRIPT := "Anima.ahk" ; name AND extension of the script if no arg.
 DEF_ICON := "AHK" ; name of the icon if no arg.
 
 if A_Args.Length > 3  {
-    MsgBox "Usage: AhkCompile.ahk [SourcePath] [IconName]? [CompilerPath]?"
+    MsgBox "Usage: Build.ahk [SourcePath] [IconName]? [CompilerPath]?"
     ExitApp
 }
 
@@ -80,9 +79,9 @@ While ProcessExist(ScriptName . ".exe")
 FileSafeDelete(OutputPath)
 
 ; Build the Compiler Arguments. Including setting icon to Script.ico or DEFICON.ico or nothing.
-CompArgs :=
-    " /in " . SrcPath .
-    " /out " . OutputPath
+CompArgs := " /in " . SrcPath
+          . " /out " . OutputPath
+
 if FileExist(IconPath) {
     CompArgs .= " /icon " . IconPath
 } else if (DEF_ICON != "") {
@@ -96,44 +95,3 @@ if FileExist(IconPath) {
 RunWait CompPath CompArgs
 ; RUN
 Run OutputPath
-
-
-; Should be a lib.
-JoinPath(Base, Paths*) {
-
-    if Instr(Base, "/") {
-        sep := "/"
-    } else {
-        sep := "\"
-    }
-
-    for Path in Paths {
-        if (Path == "") {
-            continue
-        }
-
-        firstPChar := SubStr(Path, 1, 1)
-        lastBChar := SubStr(Base, -1)
-        if (firstPChar == ".") {
-            Base .= Path
-            continue
-        }
-
-        if (firstPChar == "\" or firstPChar == "/") {
-            Path := SubStr(Path, 2)
-        }
-        if (lastBChar == "\" or lastBChar == "/") {
-            Path := SubStr(Path, 1,-1)
-        }
-
-        Base .= sep . Path
-    }
-    return Base
-}
-
-; Should be a lib.
-FileSafeDelete(FilePath) {
-    if FileExist(FilePath) {
-        FileDelete FilePath
-    }
-}
