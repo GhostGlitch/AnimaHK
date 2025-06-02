@@ -2,7 +2,7 @@
 #SingleInstance Force
 #Include <Apparition\String>
 #Include <Apparition\Num>
-#Include <Apparition\File>
+#Include <Apparition\AllFile>
 ;; |||TODO|||
     ;;-||Document|| How to use the "AnimusHK project" system.
 
