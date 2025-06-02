@@ -97,8 +97,7 @@ WriteManifest(Dir, FileName, Contents, level) {
 
   footer := 
   (
-    '  #HotIf      
-      FileEncoding(G_FILE_ENCODING)
+    '  FileEncoding(G_FILE_ENCODING)
       SendMode(G_MODE_SEND)
       SendLevel(G_SENDLEVEL)
 
@@ -125,6 +124,7 @@ WriteManifest(Dir, FileName, Contents, level) {
       SetRegView(G_REG_VIEW)
     '
   )
+  contents .= "    #HotIf`n"
   FilePath := JoinPath(Dir, FileName)
   if level == 1 {
     header := ToSection(header, "RECORD_INITIAL_GLOBAL_STATE", 0, "Enforces module locality", "PLUGINS SHOULD NOT MODIFY THESE")

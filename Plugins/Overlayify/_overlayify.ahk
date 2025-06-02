@@ -36,8 +36,8 @@
     #include functions.ahk
     #include hotkeys.ahk
   ;-----------------------------------------------------------------------------
+    #HotIf
 ;------RESTORE_GLOBAL_STATE---------------------[Enforces module locality]------
-  #HotIf
   FileEncoding(G_FILE_ENCODING)
   SendMode(G_MODE_SEND)
   SendLevel(G_SENDLEVEL)

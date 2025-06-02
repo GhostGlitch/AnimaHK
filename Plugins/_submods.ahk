@@ -7,3 +7,4 @@
       #include HotstringHelper\_hotstringhelper.ahk
       #include Overlayify\_overlayify.ahk
     ;---------------------------------------------------------------------------
+    #HotIf

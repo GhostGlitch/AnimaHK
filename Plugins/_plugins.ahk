@@ -11,3 +11,4 @@
     #include MediaControls.ahk
     #include Shadow.ahk
   ;-----------------------------------------------------------------------------
+    #HotIf
