@@ -9,6 +9,11 @@
     ;;-||Maybe?||
         ;;?-|Plugin-Control| Add Tray controls to enable/disable individual plugins
 
+; If Run as a script, run the mahk to ensure module trees are correct.
+;@Ahk2Exe-IgnoreBegin
+RunWait "Anima.m.ahk"
+;@Ahk2Exe-IgnoreEnd
+
 #Include Plugins\
 
 ;Globals
