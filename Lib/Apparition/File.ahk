@@ -10,17 +10,18 @@ FileSafeDelete(FilePath) {
 
 JoinPath(Base, Paths*) {
 
-    if Instr(Base, "/") {
-        sep := "/"
-    } else {
+    if Instr(Base, "\") {
         sep := "\"
+    } else {
+        sep := "/"
     }
 
     for Path in Paths {
         if (Path == "") {
             continue
         }
-
+        Path := StrReplace(Path, "/", sep)
+        Path := StrReplace(Path, "\", sep)
         firstPChar := SubStr(Path, 1, 1)
         lastBChar := SubStr(Base, -1)
         if (firstPChar == ".") {
@@ -28,11 +29,11 @@ JoinPath(Base, Paths*) {
             continue
         }
 
-        if (firstPChar == "\" or firstPChar == "/") {
+        if (firstPChar == sep) {
             Path := SubStr(Path, 2)
         }
-        if (lastBChar == "\" or lastBChar == "/") {
-            Path := SubStr(Path, 1,-1)
+        if (lastBChar == sep) {
+            Base := SubStr(Base, 1,-1)
         }
 
         Base .= sep . Path

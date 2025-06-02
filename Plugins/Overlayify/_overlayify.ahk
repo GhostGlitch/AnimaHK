@@ -33,8 +33,8 @@
   G_REG_VIEW              := A_RegView
 ;-------------------------------------------------------------------------------
   ;------MAIN_INCLUDES----------------------------------------------------------
-    #include functions.ahk
-    #include hotkeys.ahk
+    #include %A_LineFile%\..\functions.ahk
+    #include %A_LineFile%\..\hotkeys.ahk
   ;-----------------------------------------------------------------------------
     #HotIf
 ;------RESTORE_GLOBAL_STATE---------------------[Enforces module locality]------

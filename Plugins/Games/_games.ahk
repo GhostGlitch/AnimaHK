@@ -33,9 +33,9 @@
   G_REG_VIEW              := A_RegView
 ;-------------------------------------------------------------------------------
   ;------MAIN_INCLUDES----------------------------------------------------------
-    #include CookServeDelicious3.ahk
-    #include functions.ahk
-    #include TIS.ahk
+    #include %A_LineFile%\..\CookServeDelicious3.ahk
+    #include %A_LineFile%\..\functions.ahk
+    #include %A_LineFile%\..\TIS.ahk
   ;-----------------------------------------------------------------------------
     #HotIf
 ;------RESTORE_GLOBAL_STATE---------------------[Enforces module locality]------

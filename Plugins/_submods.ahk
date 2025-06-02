@@ -3,8 +3,8 @@
 #Requires AutoHotkey v2.0
 
     ;------SUBMODULES-----------------------------------------------------------
-      #include Games\_games.ahk
-      #include HotstringHelper\_hotstringhelper.ahk
-      #include Overlayify\_overlayify.ahk
+      #include %A_LineFile%\..\Games\_games.ahk
+      #include %A_LineFile%\..\HotstringHelper\_hotstringhelper.ahk
+      #include %A_LineFile%\..\Overlayify\_overlayify.ahk
     ;---------------------------------------------------------------------------
     #HotIf

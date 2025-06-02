@@ -18,7 +18,7 @@ GenPluginTree(PluginDir, MakeSubmods := true, Manifest := "", _lvl:=0) {
   SetWorkingDir PluginDir
   {
     formatInclude(path, indent := 1) {
-      return "#include ".Indent(indent, "  ") . path . "`n"
+      return "#include ".Indent(indent, "  ") . JoinPath("%A_LineFile%\..\",path) . "`n"
     }
     contents := ""
     Loop Files, "*.ahk" {
