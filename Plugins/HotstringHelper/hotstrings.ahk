@@ -1,9 +1,11 @@
 #Requires AutoHotkey v2.0
+#SingleInstance Force
+;#Hotstring NoMouse
 
 ; For adding hotstrings
 
 ; Set Text Mode
-Hotstring("T")
+;Hotstring("T")
 
 ; ":tm:" -> Trademark symbol.
 HotString(":::tm:", "™")

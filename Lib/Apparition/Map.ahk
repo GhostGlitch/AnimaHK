@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0 
 ;;TODO Either find way to make MsgBox use Mono font, or else do char loop nonsene to double indent for letter/num chars.
 #Include <AquaHotkey-G\AquaHotkey>
+#Include <Apparition\__Base>
 #Include <Apparition\__ToStr>
 #Include <AquaEx\Map>
 
@@ -13,8 +14,8 @@ class Apparition_Map extends AquaHotkey {
         ToString(IndentSize?, Vertical := true) { ;Allow direct calling on Gmap instances.
             return __ApparitionToStr(this, IndentSize?, Vertical)
         }
-        static Display(obj, IndentSize?, Vertical := true) {
-            MsgBox(__ApparitionToStr(obj, IndentSize?, Vertical))
+        static Display(obj, IndentSize?, Vertical := true, Title?) {
+            MsgBox(__ApparitionToStr(obj, IndentSize?, Vertical), Title?)
         }
         /**
          * Displays the map's string representation in a message box.
@@ -26,8 +27,8 @@ class Apparition_Map extends AquaHotkey {
          * @param {number} [IndentSize] Optional indentation size for nested structures.
          * @param {boolean} [Vertical=true] Optional flag to use an alternate more vertical representation.
          */
-        Display(IndentSize?, Vertical := true) {
-            MsgBox(this.ToString(IndentSize?, Vertical))
+        Display(IndentSize?, Vertical := true, Title?) {
+            MsgBox(this.ToString(IndentSize?, Vertical), Title?)
         }
         
         /** 

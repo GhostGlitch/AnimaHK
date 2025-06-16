@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include <Apparition\File>
+#Include <Apparition\AllFile>
 ;; |||TODO|||
     ;;-||Document|| How to use the "AnimusHK project" system.
 
@@ -94,4 +94,4 @@ if FileExist(IconPath) {
 ; Compile
 RunWait CompPath CompArgs
 ; RUN
-Run OutputPath
+try Run OutputPath

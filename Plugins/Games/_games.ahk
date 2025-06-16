@@ -33,7 +33,9 @@
   G_REG_VIEW              := A_RegView
 ;-------------------------------------------------------------------------------
   ;------MAIN_INCLUDES----------------------------------------------------------
+    #include %A_LineFile%\..\classes.ahk
     #include %A_LineFile%\..\CookServeDelicious3.ahk
+    #include %A_LineFile%\..\DropDutchy.ahk
     #include %A_LineFile%\..\functions.ahk
     #include %A_LineFile%\..\TIS.ahk
   ;-----------------------------------------------------------------------------

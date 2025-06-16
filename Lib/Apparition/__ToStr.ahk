@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
-#Include <Apparition\String>
-#Include <Apparition\AllNumbers>
+#Include <Apparition\AllPrims>
+#Include <Apparition\IfMethods>
 __ApparitionToStr(obj, IndentSize?, Vertical := true, __nlvl__ := 0) {
     ;Base case.
     if !IsObject(obj) {
@@ -33,14 +33,14 @@ __ApparitionToStr(obj, IndentSize?, Vertical := true, __nlvl__ := 0) {
     }
     ;Build the formatted string.
     if !obj.HasProp("isApparitionCollection") {
-        if obj.HasMethod("ToString") {
-            return Indent "| " obj.ToString() " |"
-        } else {
-            return Indent "| Object:" Type(obj) " |"
-        }
+        return Indent "| " TryToString(obj, "Object:") " |"
     }
+
     Str := ""
     For k, v In obj {
+        if IsObject(k) {
+            k := TryToString(k)
+        }
         kLine := "| " . k " = "
         if Vertical {
             nextLevel := __nlvl__ + StrLen(kLine) + StrLen(k) + 1 ;The one is for the "[" at the end of the key line. Adding k length is a hack to allign non mono font. does not fully work, but seems to make it closer.

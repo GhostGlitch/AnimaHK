@@ -1,4 +1,5 @@
-#Requires AutoHotkey v2.0 
+#Requires AutoHotkey v2.0
+#Include <Apparition\__Base>
 class STDStream extends Object {
     In := 0
     Out := 0
@@ -35,7 +36,7 @@ class STDStream extends Object {
     }
 
     static Println(msg) {
-        STD.Print(msg . "`n")
+        STDStream.Print(msg . "`n")
     }
     Println(msg) {
         this.Print(msg . "`n")
@@ -104,7 +105,6 @@ class STDStream extends Object {
             e .= "`nError was: "  . msg
         }
         throw TargetError(e, -2)
-        STDStream.Print(msg)
     }
     static __noStdIn() {
         throw TargetError("Stdin does not exist", -2)

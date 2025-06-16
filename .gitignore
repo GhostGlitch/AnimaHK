@@ -6,3 +6,5 @@ Lib/AquaHotkey-G/.gitignore
 Lib/AquaHotkey-G/docs/*
 Lib/AquaHotkey-G/examples/*
 Lib/AquaHotkey-G/tests/*
+Aris-0.7.2-alpha/*
+Lib/Aris/*

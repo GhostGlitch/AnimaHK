@@ -37,7 +37,7 @@ GenPluginTree(PluginDir, MakeSubmods := true, Manifest := "", _lvl:=0) {
     }
   } SetWorkingDir OldDir
 
-  if subMods != "" {
+  if !subMods.IsEmpty {
     subMods := ToSection(subMods, "SUBMODULES", 2)
     if MakeSubmods {
       WriteManifest(PluginDir, "_submods.ahk", subMods, _lvl)
@@ -45,7 +45,7 @@ GenPluginTree(PluginDir, MakeSubmods := true, Manifest := "", _lvl:=0) {
     contents := subMods . contents
   }
   WriteManifest(PluginDir, Manifest, contents, _lvl)
-  return  PluginDir . "\" . Manifest
+  return  JoinPath(PluginDir, Manifest)
 }
 
 WriteAutoGen(Path, Contents) {
@@ -57,9 +57,7 @@ WriteAutoGen(Path, Contents) {
 
     '
   )
-  FileSafeDelete(Path) ; reset mainifest
-  contents := contents.RTrim("`n")
-  FileAppend header contents, Path
+  (header contents).RTrim("`n").FileOverwrite(Path)
 }
 
 WriteManifest(Dir, FileName, Contents, level) {
@@ -136,9 +134,8 @@ WriteManifest(Dir, FileName, Contents, level) {
 }
 
 ManifestName(Dir, FileName := "") {
-  if not FileName {
-    SplitPath(Dir, &FileName)
-    FileName := StrLower(FileName) ".ahk"
+  if FileName.IsEmpty {
+    FileName := Dir.SplitPath().Name.ToLower() ".ahk"
   }
   return "_" . FileName
 }
@@ -148,10 +145,7 @@ SectionHeader(Name:="", Indent := 0, Extra?, SubNote:="", Padding := 6, IndentSi
   Name := Name.Upper().Trim().Replace(" ", "_") ; Normalize Section Name
   Indent := Indent * IndentSize                 ; Use Two space indentation
   if IsSet(Extra) {                              ; If Extra, ensure it's in brackets
-    if !Extra.startsWith("[")
-      Extra := "[" Extra
-    if !Extra.endsWith("]")
-      Extra .= "]"
+    Extra := Extra.SurroundIfNot("[","]")
   } else {
     Extra := ""
   }
@@ -172,7 +166,7 @@ SectionHeader(Name:="", Indent := 0, Extra?, SubNote:="", Padding := 6, IndentSi
   mid := "-".Repeat(MaxWidth - (pre.Length + post.Length))
   out := pre . mid . post
   ; Concat Name and Extra with -'s between, and newln
-  if SubNote != "" {
+  if !SubNote.IsEmpty {
     SubNote := SubNote.Trim().LRTrim("[", "]").LRPad("[", "]", 3) ; Ensure tripple brackets
     subIndent := (MaxWidth - (Indent + SubNote.Length + 1))//2    ; Find indent to center
     SubNote := " ".Repeat(Indent) ";" SubNote.Indent(subIndent)   ; indent and center

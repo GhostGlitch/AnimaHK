@@ -1,28 +1,32 @@
-#Requires AutoHotkey v2.0 
+#Requires AutoHotkey v2.0
+#Include <Apparition\__Base>
+#Include <Apparition\ControlFlow>
 #Include <AquaEx\Window>
 
-/*
-WINEVENTPROC Wineventproc;
-
-void Wineventproc(
-  HWINEVENTHOOK hWinEventHook,
-  DWORD event,
-  HWND hwnd,
-  LONG idObject,
-  LONG idChild,
-  DWORD idEventThread,
-  DWORD dwmsEventTime
-)
-{...}
-*/
-SetWinEventHook(eventMin, eventMax, CallbackFunc, idProcess := 0, hmodWinEventProc := 0,idThread := 0, dwflags := 0) {
+/**
+ * Wrapper for WinEventProc from Win32 API.
+ * 
+ * Creates a Windows event hook which listens for certain events and calls a function when they occur.
+ * 
+ * @param {UInt} eventMin The start of the event code range to hook.
+ * @param {UInt} eventMax The end of the event code range to hook.
+ * @param {Func} Callback The function to call when the event occurs.
+ * @param {UInt} [PID=0] Optional process ID to filter by.
+ * @param {Ptr} [hmodWinEventProc=0] Optional handle to the module containing the hook procedure.
+ * @param {UInt} [ThreadID=0] Optional thread ID to filter by.
+ * @param {UInt} [dwflags=0] Optional flags to modify hook behavior.
+ * @returns {Ptr} A handle to the installed hook.
+ * 
+ * @remarks Automatically unhooks the event when the script exits.
+ */
+SetWinEventHook(eventMin, eventMax, Callback, PID := 0, hmodWinEventProc := 0,ThreadID := 0, dwflags := 0) {
     hHook := DllCall("User32.dll\SetWinEventHook"
         , "UInt", eventMin
         , "UInt", eventMax
         , "Ptr", hmodWinEventProc
-        , "Ptr", pfnWinEventProc := CallbackCreate(CallbackFunc, "F")
-        , "UInt", idProcess
-        , "UInt", idThread
+        , "Ptr", pfnWinEventProc := CallbackCreate(Callback, "F")
+        , "UInt", PID
+        , "UInt", ThreadID
         , "UInt", dwflags
         , "Ptr")
     OnExit(ExitFunc)
@@ -30,12 +34,32 @@ SetWinEventHook(eventMin, eventMax, CallbackFunc, idProcess := 0, hmodWinEventPr
         if (hHook)
             DllCall("User32.dll\UnhookWinEvent", "Ptr", hHook)
     }
+    return hHook
 }
 
+/**
+ * Contains various static functions to extend AquaHotkey's Window class
+ */
 class Apparition_Window_Static extends AquaHotkey {
     class Window {
-        static SetWinEventHook(eventMin, eventMax, CallbackFunc, idProcess := 0, hmodWinEventProc := 0,idThread := 0, dwflags := 0) {
-            SetWinEventHook(eventMin, eventMax, CallbackFunc, idProcess, hmodWinEventProc, idThread, dwflags)
+        /**
+         * Wrapper for WinEventProc from Win32 API.
+         * 
+         * Creates a Windows event hook which listens for certain events and calls a function when they occur.
+         * 
+         * @param {UInt} eventMin The start of the event code range to hook.
+         * @param {UInt} eventMax The end of the event code range to hook.
+         * @param {Func} Callback The function to call when the event occurs.
+         * @param {UInt} [PID=0] Optional process ID to filter by.
+         * @param {Ptr} [hmodWinEventProc=0] Optional handle to the module containing the hook procedure.
+         * @param {UInt} [ThreadID=0] Optional thread ID to filter by.
+         * @param {UInt} [dwflags=0] Optional flags to modify hook behavior.
+         * @returns {Ptr} A handle to the installed hook.
+         * 
+         * @remarks Automatically unhooks the event when the script exits.
+         */
+        static SetWinEventHook(eventMin, eventMax, Callback, PID := 0, hmodWinEventProc := 0,ThreadID := 0, dwflags := 0) {
+            SetWinEventHook(eventMin, eventMax, Callback, PID, hmodWinEventProc, ThreadID, dwflags)
         }
         static RegisterMoveEvent(CallbackFunc, PID := 0)  {
         SetWinEventHook(0x000A ;  EVENT_SYSTEM_MOVESIZESTART
@@ -50,13 +74,59 @@ class Apparition_Window_Static extends AquaHotkey {
     } 
 }
 
+/**
+ * Contains various functions to extend instances of AquaHotkey's Window class
+ */
 class Apparition_Window extends AquaHotkey {
     class Window {
-        SetWinEventHook(eventMin, eventMax, CallbackFunc, idProcess := 0, hmodWinEventProc := 0,idThread := 0, dwflags := 0) {
-            Window.SetWinEventHook(eventMin, eventMax, CallbackFunc, this.PID, hmodWinEventProc, idThread, dwflags)
+        EventHook := 0
+
+        /** @private
+         * 
+         * Gets the Window's PID if it exists, gives a more detailed throw otherwise.
+         * 
+         * @returns {Integer} The PID of the Window.
+         * @throws {TargetError} If the window does not exist.
+         */
+        __tryPid() {
+            try {
+                return this.PID
+            } catch {
+                throw TargetError("Window does not exist.", -2, this.WinTitle)
+            }
         }
-        RegisterMoveEvent(CallbackFunc) {
-            Window.RegisterMoveEvent(CallbackFunc, this.PID)
+        /**
+         * Wrapper for WinEventProc from Win32 API.
+         * 
+         * Creates a Windows event hook which listens for certain events from this window and calls a function when they occur.
+         * 
+         * @param {UInt} eventMin The start of the event code range to hook.
+         * @param {UInt} eventMax The end of the event code range to hook.
+         * @param {Func} Callback The function to call when the event occurs.
+         * @param {Ptr} [hmodWinEventProc=0] Optional handle to the module containing the hook procedure.
+         * @param {UInt} [ThreadID=0] Optional thread ID to filter by.
+         * @param {UInt} [dwflags=0] Optional flags to modify hook behavior.
+         * @returns {Ptr} A handle to the installed hook.
+         * @throws {TargetError} If the window does not exist.
+         * 
+         * @remarks Uses the window's PID to set the event hook.
+         */
+        SetWinEventHook(eventMin, eventMax, Callback, hmodWinEventProc := 0, ThreadID := 0, dwflags := 0) {
+            hHook := SetWinEventHook(eventMin, eventMax, Callback, this.__tryPID(), hmodWinEventProc, ThreadID, dwflags)
+            this.EventHook := hHook
+            return hHook
+        }
+        SetWinEventHookEventual(eventMin, eventMax, Callback, hmodWinEventProc := 0, ThreadID := 0, dwflags := 0, PollingPeriod := 1000, Priority := 0) {
+            Condition := WinExist.Bind(this*)
+            SetHook() {
+                this.SetWinEventHook(eventMin, eventMax, Callback, hmodWinEventProc, ThreadID, dwflags)
+            }
+            When Condition, SetHook, PollingPeriod, Priority
+        }
+        RegisterMoveEvent(Callback) {
+            hHook := Window.RegisterMoveEvent(Callback, this.__tryPID())
+            this.EventHook := hHook
+            return hHook
         }
         static __Test() {
             Persistent
@@ -69,10 +139,6 @@ class Apparition_Window extends AquaHotkey {
                     for _ in [&event, &dwEventThread, &dwmsEventTime] ;  UInt, UInt, UInt
                         %_% &= 0xFFFFFFFF
                 }
-                /*
-                Casting between data types
-                https://www.autohotkey.com/boards/viewtopic.php?f=82&t=125643
-                */
                 Tooltip "hHook`t`t: " hHook
                     . "`nevent`t`t: " event
                     . "`nhwnd`t`t: " hwnd
@@ -87,6 +153,7 @@ class Apparition_Window extends AquaHotkey {
         }
     }
 }
+
 if A_ScriptFullPath == A_LineFile {
     Window.__Test()
 }

@@ -7,7 +7,7 @@
 _HH_Init() {
     global A_ScriptPID := ProcessExist()
     ;: Set Path to own Plugin ;;
-    if !_HH_PluginPath {
+    if !IsSet(_HH_PluginPath) or !_HH_PluginPath {
         ;: CONFIG ;;
         local CompiledPluginPath := A_ScriptDir "\Plugins\HotstringHelper"
         local SourcePluginPath := A_ScriptDir
