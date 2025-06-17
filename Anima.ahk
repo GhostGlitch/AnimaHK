@@ -41,5 +41,6 @@ global _HH_PluginPath := A_ScriptDir "\Plugins\HotstringHelper"
 ; Game specific hotkey configs
 #Include Games\_games.ahk
 
+^+F1:: ListHotkeys
 ; Any others not specified (disabled)
 ; #Include _plugins.ahk

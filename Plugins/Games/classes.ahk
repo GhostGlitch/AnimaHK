@@ -1,4 +1,5 @@
 #Include <Apparition\Window>
+#Include <Apparition\Collections>
 
 class Game extends Window {
 
